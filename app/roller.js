@@ -1,12 +1,12 @@
 var pBCost = {
-    "8": 0,
-    "9": 1,
-    "10": 2,
-    "11": 3,
-    "12": 4,
-    "13": 5,
-    "14": 7,
-    "15": 9,
+    8: 0,
+    9: 1,
+    10: 2,
+    11: 3,
+    12: 4,
+    13: 5,
+    14: 7,
+    15: 9,
     //"16" : 12 //no
 }
 
@@ -41,8 +41,8 @@ function getPBCost(array) {
     var total = 0;
 
     for (let index = 0; index < array.length; index++) {
-        if (pBCost[array[index].toString()] !== undefined) {
-            total += pBCost[array[index].toString()];
+        if (pBCost[array[index]] !== undefined) {
+            total += pBCost[array[index]];
         }
         else {
             total = "N/A";
@@ -60,7 +60,8 @@ function sortArray(array){
 
 module.exports = {
     getRollArray,
-    getPBCost
+    getPBCost,
+    pBCost
 }
 
 // var validRolls = [];

@@ -13,12 +13,13 @@
     <form action="/" method="POST">
 
         <div class="row">
-            <div class="one columns">
+            <div class="two columns">
                 <label for="repeat">repeat:</label>
                 <select class="one-third" id="repeat" name="repeat">
                     <option value="1">1</option>
                     <option value="10">10</option>
                     <option value="100">100</option>
+                    <option value="1000">1000</option>
                 </select>
             </div>
             <div class="two columns">
@@ -52,12 +53,24 @@
         </div>
         <br>
 
-        <button>roll stats</button>
+        <button>Roll for Attributes</button>
     </form>
+    <p><b>PB costs: </b>{{pb}}</p>
+
+    <hr>
+    <h5>Stats</h5>
+    {{#each stats}}
+    <p><b>Total results:</b> {{total}}</p>
+    <p><b>PB Avg:</b> {{pbAvg}}</p>
+    <p><b>NA count:</b> {{naCount}} (contain attributes without PB values)</p>
+    <hr>
+    {{/each}}
+
+<h5>Results</h5>
     <table>
         <tr>
             <th>PB total</th>
-            <th>Stats</th>
+            <th>Attributes</th>
         </tr>
         {{#each result}}
         <tr>

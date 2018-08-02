@@ -30,12 +30,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // });
 
 
-app.get('/', (req, res) => {
-    res.render('home.hbs', {
-        pageTitle: 'home page',
-        welcomeMessage: 'welcome'
-    });
-});
+app.get('/', rollController.getHome);
 
 app.post('/', rollController.rollStats);
 

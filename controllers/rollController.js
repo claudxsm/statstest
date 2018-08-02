@@ -1,4 +1,13 @@
-const roller = require('../roller');
+const roller = require('../app/roller');
+const stats = require('../app/stats');
+
+var pb = JSON.stringify(roller.pBCost, null, 2);
+
+var getHome = function (req, res) {
+    res.render('home.hbs', {
+        pb
+    });
+}
 
 var rollStats = function (req, res) {
     var result = [];
@@ -23,18 +32,24 @@ var rollStats = function (req, res) {
        }
        else if (r.total >= minpb && r.total <= maxpb) {
             result.push(r);
-       }
+       } 
     }
     }
+
+    var stat = stats.getStats(result);
+    console.log(stat);
 
     res.render('home.hbs', {
         repeat: req.body.repeat,
         minpb,
         maxpb,
-        result
+        result,
+        pb,
+        stats: [stat]
     });
 };
 
 module.exports = {
-    rollStats
+    rollStats,
+    getHome
 }
