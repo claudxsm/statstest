@@ -17,6 +17,7 @@
                 <label for="repeat">repeat:</label>
                 <select class="one-third" id="repeat" name="repeat">
                     <option value="1">1</option>
+                    <option value="2">2</option>
                     <option value="3">3</option>
                     <option value="10">10</option>
                     <option value="100">100</option>
@@ -67,7 +68,8 @@
 
     <hr>
     <h5>Stats</h5>
-    <p><b>Total rolls:</b> {{rollsTotal}} ({{rollsOutsideRange}}% thrown out)</p>
+    <p>
+        <b>Total rolls:</b> {{rollsTotal}} ({{rollsOutsideRange}}% thrown out)</p>
     {{#each stats}}
     <p>
         <b>Total results:</b> {{total}}</p>
