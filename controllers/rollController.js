@@ -53,7 +53,7 @@ var rollStats = function (req, res) {
         pb,
         stats: [stat],
         rollsTotal,
-        rollsOutsideRange
+        rollsOutsideRange = rollsOutsideRange / rollsTotal * 100
     });
 };
 
