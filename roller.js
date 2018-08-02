@@ -41,8 +41,8 @@ function getPBCost(array) {
     var total = 0;
 
     for (let index = 0; index < array.length; index++) {
-        if (pBCost[array[index]]) {
-            total += pBCost[array[index]];
+        if (pBCost[array[index].toString()] !== undefined) {
+            total += pBCost[array[index].toString()];
         }
         else {
             total = "N/A";
