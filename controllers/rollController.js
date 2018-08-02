@@ -11,18 +11,20 @@ var rollStats = function (req, res) {
             roll,
             total: roller.getPBCost(roll)
         };
-    //    if(minpb == 0 && maxpb == 99) {
-    //     result.push(r);
-    //    }
-    //    else if(minpb == 0 && r.total < maxpb){
-    //     result.push(r);
-    //    }
-    //    else if(maxpb == 99 && r.total >= minpb ){
-    //     result.push(r);
-    //    }
-    //    else if (r.total >= minpb && r.total <= maxpb) {
+       if(minpb == 0 && maxpb == 99) {
+        result.push(r);
+       }
+       else if (r.total != "N/A"){
+       if(minpb == 0 && r.total < maxpb){
+        result.push(r);
+       }
+       else if(maxpb == 99 && r.total >= minpb ){
+        result.push(r);
+       }
+       else if (r.total >= minpb && r.total <= maxpb) {
             result.push(r);
-       // }
+       }
+    }
     }
 
     res.render('home.hbs', {
