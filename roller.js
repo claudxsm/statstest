@@ -20,7 +20,7 @@ var getRollArray = () => {
         var top3 = getMaxNFromArray(roll4);
         result.push(sumArray(top3));
     }
-    return result;
+    return sortArray(result);
 }
 
 function roll(max = 6, min = 1) {
@@ -58,13 +58,18 @@ function sortArray(array){
     });
 }
 
-var validRolls = [];
-while (validRolls.length < 100) {
-    var array = sortArray(getRollArray());
-    var total = getPBCost(array);
-    if(total >= 25 && total <= 29)
-        validRolls.push(array);
+module.exports = {
+    getRollArray,
+    getPBCost
 }
-validRolls.forEach(elem => {
-    console.log(elem, getPBCost(elem));
-})
+
+// var validRolls = [];
+// while (validRolls.length < 100) {
+//     var array = sortArray(getRollArray());
+//     var total = getPBCost(array);
+//     if(total >= 25 && total <= 29)
+//         validRolls.push(array);
+// }
+// validRolls.forEach(elem => {
+//     console.log(elem, getPBCost(elem));
+// })

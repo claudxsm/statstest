@@ -1,0 +1,73 @@
+<!DOCTYPE <!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>some website</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/skeleton.css" />
+</head>
+
+<body>
+    <form action="/" method="POST">
+
+        <div class="row">
+            <div class="one columns">
+                <label for="repeat">repeat:</label>
+                <select class="one-third" id="repeat" name="repeat">
+                    <option value="1">1</option>
+                    <option value="10">10</option>
+                    <option value="100">100</option>
+                </select>
+            </div>
+            <div class="two columns">
+                <label for="minpb">Min PB</label>
+                <select class="one-third" name="minpb" id="minpb">
+                    <option value="0">None</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                    <option value="24">24</option>
+                    <option value="25">25</option>
+                    <option value="26">26</option>
+                    <option value="27">27</option>
+                </select>
+            </div>
+            <div class="two columns">
+                <label for="maxpb">Max PB</label>
+                <select class="one-third" id="maxpb" name="maxpb">
+                    <option value="99">None</option>
+                    <option value="27">27</option>
+                    <option value="28">28</option>
+                    <option value="29">29</option>
+                    <option value="30">30</option>
+                    <option value="31">31</option>
+                    <option value="32">32</option>
+                    <option value="33">33</option>
+                    <option value="34">34</option>
+                </select>
+            </div>
+        </div>
+        <br>
+
+        <button>roll stats</button>
+    </form>
+    <table>
+        <tr>
+            <th>PB total</th>
+            <th>Stats</th>
+        </tr>
+        {{#each result}}
+        <tr>
+            <td>
+                <b>{{total}}</b>
+            </td>
+            <td>{{roll}}</td>
+        </tr>
+        {{/each}}
+    </table>
+</body>
+
+</html>
