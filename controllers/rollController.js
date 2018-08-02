@@ -13,8 +13,11 @@ var rollStats = function (req, res) {
     var result = [];
     var minpb = req.body.minpb;
     var maxpb = req.body.maxpb;
+    var rollsTotal = 0;
+    var rollsOutsideRange = 0;
 
     while (result.length < req.body.repeat ) {
+        rollsTotal +=1;
         var roll = roller.getRollArray();
         var r = {
             roll,
@@ -30,9 +33,12 @@ var rollStats = function (req, res) {
        else if(maxpb == 99 && r.total >= minpb ){
         result.push(r);
        }
-       else if (r.total >= minpb && r.total <= maxpb) {
-            result.push(r);
+       else if (r.total >= minpb && r.total <= maxpb) {            
+        result.push(r);
        } 
+       else {
+           rollsOutsideRange +=1;
+       }
     }
     }
 
@@ -45,7 +51,9 @@ var rollStats = function (req, res) {
         maxpb,
         result,
         pb,
-        stats: [stat]
+        stats: [stat],
+        rollsTotal,
+        rollsOutsideRange
     });
 };
 
