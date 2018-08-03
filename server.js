@@ -32,7 +32,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', rollController.getHome);
 
-app.post('/', rollController.rollStats);
+app.post('/', rollController.getRoll);
 
 app.listen(port, () => {
     console.log('server is up on port :3011');

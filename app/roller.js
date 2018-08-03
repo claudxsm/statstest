@@ -1,3 +1,8 @@
+const seedrandom = require('seedrandom');
+const _ = require('lodash');
+
+var rng = seedrandom();
+
 var pBCost = {
     3: -9,
     4: -6,
@@ -18,34 +23,24 @@ var pBCost = {
     //"16" : 12 //no
 }
 
-var getRollArray = () => {
-    var result = [];
-    for (let index = 0; index < 6; index++) {
-        var roll4 = [];
-        for (let j = 0; j < 4; j++) {
-            roll4.push(roll());
-        }
-        var top3 = getMaxNFromArray(roll4);
-        result.push(sumArray(top3));
-    }
-    return sortArray(result);
+var getAttributes = () => {
+    var attributes = [];
+    //roll 6 attributes
+    [1,2,3,4,5,6].forEach(i => {
+        //roll 4 1d6
+        var d6 = [];
+        [1,2,3,4].forEach(j => {
+            d6.push(roll());
+        })
+        //drop lowest
+        d6 = _(d6).sortBy().takeRight(3).value();
+        //sum and save attribute
+        attributes.push(sumArray(d6));
+    })      
+    return sortArray(attributes);
 }
 
-function roll(max = 6, min = 1) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function getMaxNFromArray(array, count = 3) {
-    return array.sort((a, b) => {
-        return a - b;
-    }).slice(-1 * count);
-}
-
-function sumArray(array) {
-    return array.reduce((total, num) => { return total + num; });
-}
-
-function getPBCost(array) {
+function getPBTotal(array) {
     var total = 0;
 
     for (let index = 0; index < array.length; index++) {
@@ -60,6 +55,21 @@ function getPBCost(array) {
     return total;
 }
 
+//HELPERS
+function roll(max = 6, min = 1) {
+    return Math.floor(rng() * (max - min + 1)) + min;
+}
+
+function getMaxNFromArray(array, count = 3) {
+    return array.sort((a, b) => {
+        return a - b;
+    }).slice(-1 * count);
+}
+
+function sumArray(array) {
+    return array.reduce((total, num) => { return total + num; });
+}
+
 function sortArray(array) {
     return array.sort((a, b) => {
         return b - a;
@@ -67,18 +77,7 @@ function sortArray(array) {
 }
 
 module.exports = {
-    getRollArray,
-    getPBCost,
+    getAttributes,
+    getPBTotal,
     pBCost
 }
-
-// var validRolls = [];
-// while (validRolls.length < 100) {
-//     var array = sortArray(getRollArray());
-//     var total = getPBCost(array);
-//     if(total >= 25 && total <= 29)
-//         validRolls.push(array);
-// }
-// validRolls.forEach(elem => {
-//     console.log(elem, getPBCost(elem));
-// })

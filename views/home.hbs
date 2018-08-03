@@ -22,6 +22,7 @@
                     <option value="10">10</option>
                     <option value="100">100</option>
                     <option value="1000" selected="selected">1000</option>
+                    <option value="10000">10,000</option>
                 </select>
             </div>
             <div class="two columns">
@@ -66,31 +67,33 @@
     <p>
         <b>PB costs: </b>{{pb}}</p>
 
-    <hr>
-    <h5>Stats</h5>
-    <p>
-        <b>Total rolls:</b> {{rollsTotal}} ({{rollsOutsideRange}}% thrown out)</p>
-    {{#each stats}}
-    <p>
-        <b>Total results:</b> {{total}}</p>
-    <p>
-        <b>PB Avg:</b> {{pbAvg}}</p>
-    <p>
-        <b>NA count:</b> {{naCount}} (contain attributes without PB values)</p>
-    <hr> {{/each}}
+    <hr> 
 
     <h5>Results</h5>
+       <p>
+        <b>Total rolls:</b> {{rollsTotal}} ({{rollsOutsideRange}}% thrown out)
+        <br>
+        {{#each stats}}
+        <b>Total results:</b> {{total}}
+        <br>
+        <b>PB Avg:</b> {{pbAvg}}
+        <br>
+        <b>NA count:</b> {{naCount}} (contain attributes without PB values)
+        {{/each}}
+    </p>
     <table>
         <tr>
             <th>PB total</th>
-            <th>Attributes</th>
+            <th colspan="6">Attributes</th>
         </tr>
         {{#each result}}
         <tr>
             <td>
                 <b>{{total}}</b>
             </td>
-            <td>{{roll}}</td>
+            {{#each roll}}
+            <td>{{this}}</td>
+            {{/each}}
         </tr>
         {{/each}}
     </table>
