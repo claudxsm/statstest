@@ -17,27 +17,68 @@ var pBCost = {
     13: 5,
     14: 7,
     15: 9,
-    16:12,
-    17:15,
-    18:19
+    16: 12,
+    17: 15,
+    18: 19
     //"16" : 12 //no
 }
 
-var getAttributes = () => {
-    var attributes = [];
+
+var rollForAttributes = () => {
+    var result = {};
+    var rolls = [];
+
     //roll 6 attributes
-    [1,2,3,4,5,6].forEach(i => {
+    [1, 2, 3, 4, 5, 6].forEach(i => {
         //roll 4 1d6
-        var d6 = [];
-        [1,2,3,4].forEach(j => {
-            d6.push(roll());
+        var fourd6 = [];
+        [1, 2, 3, 4].forEach(j => {
+            fourd6.push(roll());
         })
         //drop lowest
-        d6 = _(d6).sortBy().takeRight(3).value();
-        //sum and save attribute
-        attributes.push(sumArray(d6));
-    })      
-    return sortArray(attributes);
+        threed6 = _(fourd6).map('roll').sortBy().takeRight(3).value();
+        //sum
+        var attribute = _.sum(threed6);
+
+        rolls.push({attribute, fourd6});
+    });
+
+    //sort 
+    rolls = _.sortBy(rolls, 'attribute');
+
+    result.attributes = _.map(rolls, 'attribute');
+    result.all_rolls= _.map(rolls, 'fourd6');
+    result.pbTotal = getPBTotal(result.attributes);
+    return result;
+}
+
+var getAttributes = (minpb = null, maxpb = null) => {
+    var attempts = 0;
+    var failed_rolls = [];
+    var result = null;
+
+    while (result == null) {
+        result = rollForAttributes();
+        attempts += 1;
+
+        if (minpb == null && maxpb == null) {
+            continue;
+        }
+        else if (typeof result.pbTotal === "number") {
+            if ((minpb == null && result.pbTotal < maxpb)
+                || (maxpb == null && result.pbTotal >= minpb)
+                || (result.pbTotal >= minpb && result.pbTotal <= maxpb)) {
+                continue;
+            }
+            else {
+                failed_rolls.push(result.all_rolls);
+                result = null;
+            }
+        }
+    }
+    result.attempts = attempts;
+    result.failed_rolls = failed_rolls;
+    return result;
 }
 
 function getPBTotal(array) {
@@ -57,27 +98,15 @@ function getPBTotal(array) {
 
 //HELPERS
 function roll(max = 6, min = 1) {
-    return Math.floor(rng() * (max - min + 1)) + min;
+    var rng_base = rng();
+    return {
+        roll: Math.floor(rng_base * (max - min + 1)) + min,
+        rng_base
+    };
 }
 
-function getMaxNFromArray(array, count = 3) {
-    return array.sort((a, b) => {
-        return a - b;
-    }).slice(-1 * count);
-}
-
-function sumArray(array) {
-    return array.reduce((total, num) => { return total + num; });
-}
-
-function sortArray(array) {
-    return array.sort((a, b) => {
-        return b - a;
-    });
-}
 
 module.exports = {
     getAttributes,
-    getPBTotal,
     pBCost
 }

@@ -5,59 +5,29 @@ var pb = JSON.stringify(roller.pBCost, null, 2);
 
 var getHome = function (req, res) {
     res.render('home.hbs', {
-        pb
+        pbCostList: roller.pBCost
     });
 }
 
 var getRoll = function (req, res) {
     var result = [];
-    var minpb = req.body.minpb;
-    var maxpb = req.body.maxpb;
-    var rollsTotal = 0;
-    var rollsOutsideRange = 0;
+    var minpb = req.body.minpb == 0 ? null : req.body.minpb;
+    var maxpb = req.body.maxpb == 99 ? null : req.body.maxpb;
 
-    while (result.length < req.body.repeat) {
-        rollsTotal += 1;
-        var roll = roller.getAttributes();
-        var r = {
-            roll,
-            total: roller.getPBTotal(roll)
-        };
-
-        if (minpb == 0 && maxpb == 99) {
-            result.push(r);
-        }
-        else if (r.total != "N/A") {
-            if (minpb == 0 && r.total < maxpb) {
-                result.push(r);
-            }
-            else if (maxpb == 99 && r.total >= minpb) {
-                result.push(r);
-            }
-            else if (r.total >= minpb && r.total <= maxpb) {
-                result.push(r);
-            }
-            else {
-                rollsOutsideRange += 1;
-            }
-        }
+    for (let index = 0; index < req.body.repeat; index++) {
+        result.push(roller.getAttributes(minpb, maxpb));
     }
-
+ 
     var stat = stats.getStats(result);
 
-    res.render('home.hbs', {
-        repeat: req.body.repeat,
-        minpb,
-        maxpb,
+    res.render('home.hbs', {        
         result,
-        pb,
-        stats: [stat],
-        rollsTotal,
-        rollsOutsideRange: rollsOutsideRange / rollsTotal * 100
+        pbCostList: roller.pBCost,
+        stats: [stat]
     });
 };
 
 module.exports = {
     getRoll,
     getHome
-}
+} 

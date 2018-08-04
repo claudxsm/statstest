@@ -7,6 +7,7 @@
     <title>some website</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="/css/skeleton.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
 </head>
 
 <body>
@@ -65,37 +66,56 @@
         <button>Roll for Attributes</button>
     </form>
     <p>
-        <b>PB costs: </b>{{pb}}</p>
-
-    <hr> 
+        <h5>PB costs</h5>
+        <table>
+            <tr>
+                <th>Attribute</th>
+                {{#each pbCostList}}
+                <td>{{@key}}</td> {{/each}}
+            </tr>
+            <tr>
+                <th>Cost</th>
+                {{#each pbCostList}}
+                <td> {{this}}</td> {{/each}}
+            </tr>
+        </table>
+    </p>
 
     <h5>Results</h5>
-       <p>
+    {{#each stats}}
+    <p>
         <b>Total rolls:</b> {{rollsTotal}} ({{rollsOutsideRange}}% thrown out)
         <br>
-        {{#each stats}}
         <b>Total results:</b> {{total}}
         <br>
         <b>PB Avg:</b> {{pbAvg}}
         <br>
         <b>NA count:</b> {{naCount}} (contain attributes without PB values)
-        {{/each}}
     </p>
+    {{/each}}
     <table>
-        <tr>
-            <th>PB total</th>
-            <th colspan="6">Attributes</th>
-        </tr>
-        {{#each result}}
-        <tr>
-            <td>
-                <b>{{total}}</b>
-            </td>
-            {{#each roll}}
-            <td>{{this}}</td>
+        <thead>
+            <tr>
+                <th>PB total</th>
+                <th colspan="6">Attributes</th>
+                <th>1d6 Rolls</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each result}}
+            <tr>
+                <td>
+                    {{pbTotal}}
+                </td>
+                {{#each attributes}}
+                <td class="attribute"><strong>{{this}}</strong></td>
+                {{/each}}
+                <td>
+                    {{#each all_rolls}} ({{#each this}}{{this.roll}}{{#unless @last}}, {{/unless}}{{/each}}){{#unless @last}}, {{/unless}} {{/each}}
+                </td>
+            </tr>
             {{/each}}
-        </tr>
-        {{/each}}
+        </tbody>
     </table>
 </body>
 
