@@ -5,4 +5,21 @@ tbody td.attribute {
 
     tbody td {
         text-align: center;
-        }
+    }
+
+    .grey {
+        color: lightgrey;
+    }
+
+table.numbers{
+    font-size:0.9em;
+    margin-bottom:10px;
+}
+
+table.numbers td {
+    padding: 0 7px;
+}
+
+h5 {
+    margin-bottom: 10px;
+}

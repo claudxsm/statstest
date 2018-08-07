@@ -15,7 +15,7 @@
 
         <div class="row">
             <div class="two columns">
-                <label for="repeat">repeat:</label>
+                <label for="repeat">Repeat:</label>
                 <select class="one-third" id="repeat" name="repeat">
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -67,7 +67,7 @@
     </form>
     <p>
         <h5>PB costs</h5>
-        <table>
+        <table class="numbers">
             <tr>
                 <th>Attribute</th>
                 {{#each pbCostList}}
@@ -81,7 +81,7 @@
         </table>
     </p>
 
-    <h5>Results</h5>
+    <h5>Stats</h5>
     {{#each stats}}
     <p>
         <b>Total rolls:</b> {{rollsTotal}} ({{rollsOutsideRange}}% thrown out)
@@ -91,8 +91,43 @@
         <b>PB Avg:</b> {{pbAvg}}
         <br>
         <b>NA count:</b> {{naCount}} (contain attributes without PB values)
+        <br>
+        <table class="numbers">
+            <tr>
+                <th>Min attribute</th>
+                {{#each minAttributes}}
+                <td>{{@key}}</td> {{/each}}
+            </tr>
+            <tr>
+                <th>Count</th>
+                {{#each minAttributes}}
+                <td>
+                    <nobr> {{this.percent}}%
+                        <span class="grey">({{this.count}})</span>
+                    </nobr>
+                </td> {{/each}}
+            </tr>
+        </table>
+        <table class="numbers">
+            <tr>
+                <th>Max attribute</th>
+                {{#each maxAttributes}}
+                <td>{{@key}}</td> {{/each}}
+            </tr>
+            <tr>
+                <th>Count</th>
+                {{#each maxAttributes}}
+                <td>
+                    <nobr>{{this.percent}}%
+                        <span class="grey">({{this.count}})</nobr>
+                    </span>
+                </td> {{/each}}
+            </tr>
+        </table>
     </p>
     {{/each}}
+
+    <h5>Attributes</h5>
     <table>
         <thead>
             <tr>
@@ -108,7 +143,9 @@
                     {{pbTotal}}
                 </td>
                 {{#each attributes}}
-                <td class="attribute"><strong>{{this}}</strong></td>
+                <td class="attribute">
+                    <strong>{{this}}</strong>
+                </td>
                 {{/each}}
                 <td>
                     {{#each all_rolls}} ({{#each this}}{{this.roll}}{{#unless @last}}, {{/unless}}{{/each}}){{#unless @last}}, {{/unless}} {{/each}}
