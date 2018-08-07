@@ -20,7 +20,6 @@ var pBCost = {
     16: 12,
     17: 15,
     18: 19
-    //"16" : 12 //no
 }
 
 
@@ -40,14 +39,14 @@ var rollForAttributes = () => {
         //sum
         var attribute = _.sum(threed6);
 
-        rolls.push({attribute, fourd6});
+        rolls.push({ attribute, fourd6 });
     });
 
     //sort 
     rolls = _.sortBy(rolls, 'attribute');
 
     result.attributes = _.map(rolls, 'attribute');
-    result.all_rolls= _.map(rolls, 'fourd6');
+    result.all_rolls = _.map(rolls, 'fourd6');
     result.pbTotal = getPBTotal(result.attributes);
     return result;
 }
@@ -57,13 +56,17 @@ var getAttributes = (minpb = null, maxpb = null) => {
     var failed_rolls = [];
     var result = null;
 
+
+
     while (result == null) {
         result = rollForAttributes();
         attempts += 1;
 
+        //no min/max - accept anything
         if (minpb == null && maxpb == null) {
             continue;
         }
+        //has pbTotal - check min/max
         else if (typeof result.pbTotal === "number") {
             if ((minpb == null && result.pbTotal < maxpb)
                 || (maxpb == null && result.pbTotal >= minpb)
@@ -74,6 +77,11 @@ var getAttributes = (minpb = null, maxpb = null) => {
                 failed_rolls.push(result.all_rolls);
                 result = null;
             }
+        }
+        //has no pbTotal - fail min/max check
+        else {
+            failed_rolls.push(result.all_rolls);
+            result = null;
         }
     }
     result.attempts = attempts;

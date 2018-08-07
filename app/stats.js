@@ -7,7 +7,9 @@ var getStats = function (results){
         rollsTotal: 0,
         rollsOutsideRange: 0,
         minAttributes: {}, 
-        maxAttributes: {}
+        maxAttributes: {},
+        pbMin: null,
+        pbMax: null
     };
     
     var pbTotal = 0;
@@ -15,10 +17,17 @@ var getStats = function (results){
     var rollsOutsideRange = 0;
 
     results.forEach(result => {
+
         //pb total
-        if(typeof result.total === "number"){
-            pbTotal += result.total;
+        if(typeof result.pbTotal === "number"){
+            pbTotal += result.pbTotal;
             pbTotalCount += 1;
+            if(stats.pbMin == null || result.pbTotal < stats.pbMin) {
+                stats.pbMin = result.pbTotal;
+            }
+            if(stats.pbMax == null || result.pbTotal > stats.pbMax) {
+                stats.pbMax = result.pbTotal;
+            }
         }
         else {
             stats.naCount += 1;
