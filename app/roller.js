@@ -51,37 +51,56 @@ var rollForAttributes = () => {
     return result;
 }
 
-var getAttributes = (minpb = null, maxpb = null) => {
+var getAttributes = (minpb = null, maxpb = null, minattr = 0, maxattr = 99) => {
     var attempts = 0;
     var failed_rolls = [];
     var result = null;
-
-
 
     while (result == null) {
         result = rollForAttributes();
         attempts += 1;
 
-        //no min/max - accept anything
-        if (minpb == null && maxpb == null) {
-            continue;
+        //check min/max attr
+        if (minattr !== null || maxattr !== null) {
+            for (var attr of result.attributes) {
+                if (minattr !== null && attr < minattr) {
+                    failed_rolls.push(result.all_rolls);
+                    result = null;
+                    break;
+                }
+
+                if (maxattr !== null && attr > maxattr) {
+                    failed_rolls.push(result.all_rolls);
+                    result = null;
+                    break;
+                }
+            }
         }
-        //has pbTotal - check min/max
-        else if (typeof result.pbTotal === "number") {
-            if ((minpb == null && result.pbTotal < maxpb)
-                || (maxpb == null && result.pbTotal >= minpb)
-                || (result.pbTotal >= minpb && result.pbTotal <= maxpb)) {
+
+        if (result != null) {
+            //no min/max - accept anything
+            if (minpb == null && maxpb == null) {
                 continue;
             }
+            //has pbTotal - check min/max
+            else if (typeof result.pbTotal === "number") {
+                if ((minpb == null && result.pbTotal < maxpb)
+                    || (maxpb == null && result.pbTotal >= minpb)
+                    || (result.pbTotal >= minpb && result.pbTotal <= maxpb)) {
+                    continue;
+                }
+                else {
+                    failed_rolls.push(result.all_rolls);
+                    result = null;
+                    continue;
+                }
+            }
+            //has no pbTotal - fail min/max check
             else {
                 failed_rolls.push(result.all_rolls);
                 result = null;
+                continue;
             }
-        }
-        //has no pbTotal - fail min/max check
-        else {
-            failed_rolls.push(result.all_rolls);
-            result = null;
         }
     }
     result.attempts = attempts;
