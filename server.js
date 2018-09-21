@@ -1,4 +1,5 @@
 const express = require('express');
+const exphbs = require("express-handlebars");
 const hbs = require('hbs');
 const bodyParser = require('body-parser');
 
@@ -6,6 +7,13 @@ const rollController = require('./controllers/rollController');
 
 const port = process.env.PORT || 3011;
 var app = express();
+app.engine("hbs", exphbs({
+    defaultLayout: "",
+    extname: ".hbs",
+    helpers: require("./public/js/helpers.js").helpers, // same file that gets used on our client
+    partialsDir: "views/partials/", // same as default, I just like to be explicit
+    layoutsDir: "views/layouts/" // same as default, I just like to be explicit
+}));
 
 hbs.registerPartials(__dirname + '/views/partials');
 app.set('view engine', 'hbs');

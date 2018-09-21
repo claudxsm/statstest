@@ -17,18 +17,21 @@
             <div class="one columns">
                 <label for="repeat">Repeat:</label>
                 <select class="one-third" id="repeat" name="repeat">
+                    {{#select prepop.repeat}}
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
                     <option value="10">10</option>
                     <option value="100">100</option>
-                    <option value="1000" selected="selected">1000</option>
+                    <option value="1000">1000</option>
                     <option value="10000">10,000</option>
+                    {{/select}}
                 </select>
             </div>
             <div class="one columns">
                 <label for="minpb">Min PB</label>
                 <select class="one-third" name="minpb" id="minpb">
+                    {{#select prepop.minpb}}
                     <option value="0">None</option>
                     <option value="20">20</option>
                     <option value="21">21</option>
@@ -44,11 +47,13 @@
                     <option value="31">31</option>
                     <option value="32">32</option>
                     <option value="33">33</option>
+                    {{/select}}
                 </select>
             </div>
             <div class="one columns">
                 <label for="maxpb">Max PB</label>
                 <select class="one-third" id="maxpb" name="maxpb">
+                    {{#select prepop.maxpb}}
                     <option value="99">None</option>
                     <option value="27">27</option>
                     <option value="28">28</option>
@@ -58,11 +63,13 @@
                     <option value="32">32</option>
                     <option value="33">33</option>
                     <option value="34">34</option>
+                    {{/select}}
                 </select>
             </div>
             <div class="one columns">
                 <label for="minattr">Min Attr</label>
                 <select class="one-third" id="minattr" name="minattr">
+                    {{#select prepop.minattr}}
                     <option value="0">None</option>
                     <option value="4">4</option>
                     <option value="5">5</option>
@@ -70,16 +77,19 @@
                     <option value="7">7</option>
                     <option value="8">8</option>
                     <option value="9">9</option>
+                    {{/select}}
                 </select>
             </div>
             <div class="one columns">
                 <label for="maxattr">Max Attr</label>
                 <select class="one-third" id="maxattr" name="maxattr">
+                    {{#select prepop.maxattr}}
                     <option value="99">None</option>
                     <option value="17">17</option>
                     <option value="16">16</option>
                     <option value="15">15</option>
                     <option value="14">14</option>
+                    {{/select}}
                 </select>
             </div>
         </div>
